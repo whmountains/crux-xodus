@@ -49,6 +49,6 @@
     </repository>
   </distributionManagement>
   <scm>
-    <url>https://github.com/whmountains/crux-xodus</url>
+    <url>https://github.com/avisi-apps/crux-xodus</url>
   </scm>
 </project>
