@@ -1,7 +1,7 @@
-(ns avisi.crux.xodus
-  (:require [crux.kv :as kv]
-            [crux.system :as sys]
-            [crux.memory :as mem])
+(ns avisi.xtdb.xodus
+  (:require [xtdb.kv :as kv]
+            [xtdb.system :as sys]
+            [xtdb.memory :as mem])
   (:import [java.io Closeable]
            [jetbrains.exodus.env Environments Environment Store StoreConfig Transaction Cursor TransactionalExecutable]
            [jetbrains.exodus ArrayByteIterable ByteIterable]))
@@ -82,12 +82,12 @@
   Closeable
   (close [{:keys [env]}]
     (.executeTransactionSafeTask
-      ^Environment env
-      ^Runnable
-      (reify
-        Runnable
-        (run [_]
-          (.close ^Environment env))))))
+     ^Environment env
+     ^Runnable
+     (reify
+       Runnable
+       (run [_]
+         (.close ^Environment env))))))
 
 (defn ->kv-store {::sys/args {:db-dir {:doc "Directory to store K/V files"
                                        :required? true
@@ -98,6 +98,6 @@
     (with-transaction! env (fn [^Transaction tx]
                              (reset! store (.openStore env "kv" StoreConfig/WITHOUT_DUPLICATES tx))))
     (map->XodusKv
-      {:store @store
-       :db-dir db-dir
-       :env env})))
+     {:store @store
+      :db-dir db-dir
+      :env env})))
